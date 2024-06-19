@@ -3,17 +3,57 @@ const addEmployeesBtn = document.querySelector('#add-employees-btn');
 
 // Collect employee data
 const collectEmployees = function() {
+    const employees = [];
+    let addMore = true;
+
+    while (addMore) {
+        const firstName = prompt("Enter employee's first name:");
+        const lastName = prompt("Enter employee's last name:");
+        const salaryInput = prompt("Enter employee's salary:");
+        const salary = parseFloat(salaryInput);
+
+        if (firstName && lastName && !isNaN(salary)) {
+            employees.push({ firstName, lastName, salary });
+        } else {
+            alert("Invalid input. Please try again.");
+        }
+
+        addMore = confirm("Do you want to add another employee?");
+    }
+
+        return employees;
+    }
   // TODO: Get user input to create and return an array of employee objects
-}
+
 
 // Display the average salary
 const displayAverageSalary = function(employeesArray) {
   // TODO: Calculate and display the average salary
+  if (employeesArray.length === 0) return;
+
+    const totalSalary = employeesArray.reduce((sum, employee) => sum + employee.salary, 0);
+    const averageSalary = totalSalary / employeesArray.length;
+
+    const averageSalaryDisplay = document.querySelector('#average-salary');
+    averageSalaryDisplay.textContent = `Average Salary: ${averageSalary.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+    })}`;
 }
 
 // Select a random employee
 const getRandomEmployee = function(employeesArray) {
   // TODO: Select and display a random employee
+  if (employeesArray.length === 0) return;
+
+    const randomIndex = Math.floor(Math.random() * employeesArray.length);
+    const randomEmployee = employeesArray[randomIndex];
+
+    const randomEmployeeDisplay = document.querySelector('#random-employee');
+    randomEmployeeDisplay.textContent = `Random Employee: ${randomEmployee.firstName} ${randomEmployee.lastName}, ${randomEmployee.salary.toLocaleString("en-US", {
+        style: "currency",
+        currency: "USD"
+    })}`;
 }
 
 /*
